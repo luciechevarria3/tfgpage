@@ -1,31 +1,41 @@
-export default function ExtensionCard(props) {
+import Link from "next/link";
+
+export default function ExtensionCard({ name, image, publisher, extID }) {
   return (
     <>
-      <div className="border-4 border-slate-300 rounded-lg w-60 h-64 p-4 text-white">
+      <Link href={`/${extID}`}>
+        <div className="border-4 border-slate-300 rounded-lg w-fit p-4 text-white hover:bg-slate-600 hover:cursor-pointer">
 
-        <div className="flex justify-center">
-          <img
-            className="rounded-full w-24 h-24 border-4 border-white scale-75"
-            src={props.image}
-            alt="adobe icon"
-          />
-        </div>
 
-        <h2 className="text-center">
-          {props.name}
-        </h2>
+          <div className="flex justify-center">
+            <img
+              className="rounded-full w-24 h-24 border-4 border-white scale-75"
+              src={image}
+              alt={`${name} icon`}
+            />
+          </div>
 
-        <div className="flex justify-center mt-4">
-          <img className="inline w-8 h-8" src="/chrome.png" alt="chrome icon" />
-          <img className="inline w-8 h-8" src="/edge.png" alt="edge icon" />
-          <img
-            className="inline w-8 h-8"
-            src="/firefox.png"
-            alt="firefox icon"
-          />
-        </div>
+          <div className="mb-10 w-48 h-48 text-center border-2">
+            <h2 className="font-bold text-lg text-ellipsis overflow-hidden">
+              {name}
+            </h2>
 
-      </div>
+            <br />
+
+            <span>
+              <p>By:</p>
+              <h3 className="text-ellipsis overflow-hidden">{publisher}</h3>
+            </span>
+          </div>
+
+          <div className="flex justify-center border-2">
+            <img className="inline w-8 h-8" src="/chrome.png" alt="chrome icon" />
+            <img className="inline w-8 h-8" src="/edge.png" alt="edge icon" />
+            <img className="inline w-8 h-8" src="/firefox.png" alt="firefox icon" />
+          </div>
+
+        </div >
+      </Link>
     </>
   );
 }

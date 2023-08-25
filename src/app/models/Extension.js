@@ -1,4 +1,4 @@
-import { Schema, model, models } from "mongoose";
+import { Schema, model, models, mongoose } from "mongoose";
 
 const extensionSchema = new Schema({
   webstore: {
@@ -40,9 +40,8 @@ const extensionSchema = new Schema({
   lastScraped: {
     type: String,
   },
-  _id: {
-    type: String,
-  },
-});
+  _id: mongoose.SchemaTypes.ObjectId,
+
+}, { collection: "pruebaextensions" });
 
 export default models.Extension || model("Extension", extensionSchema);

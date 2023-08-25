@@ -1,18 +1,13 @@
 import { NextResponse } from "next/server";
-import mongojs from "mongojs";
 
-const db = mongojs("extensionsDetails", ["extensions"]);
+import { connectDB } from "@/utils/database";
+import Extension from "@/app/models/Extension";
+
 
 export async function GET() {
-  let extensions;
+  connectDB();
 
-  db.extensions.find().limit(10, async (err, docs) => {
-    if (err) { console.log("DATABASE ERR GETTING 10 EXTS", err); }
+  const extensions = await Extension.countDocuments();
 
-    extensions = docs;
-
-    await db.close();
-  })
-
-  return NextResponse.json(docs);
+  return NextResponse.json({ extensionsNumber: extensions });
 }

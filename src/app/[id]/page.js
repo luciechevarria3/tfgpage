@@ -1,36 +1,50 @@
+import { connectDB } from "@/utils/database";
 import TopBar from "../components/TopBar";
+import Extension from "../models/Extension";
 
-export default function ExtensionPage() {
+async function loadExtension(extID) {
+  connectDB();
+
+  const extension = await Extension.findOne({ _id: extID });
+
+  return extension;
+}
+
+export default async function ExtensionPage({ params }) {
+  const extensionID = params.id;
+
+  const extension = await loadExtension(extensionID)
+
   return (
     <>
       <TopBar />
       <div className="mx-80">
         <div className="p-4 my-4 text-white grid grid-cols-6 gap-4">
-          <img className="row-span-2" src="/adobe.jpg" />
+          <img className="row-span-2" src={extension.image} />
 
-          <h1 className="text-4xl col-span-4">Adobe Acrobat Reader</h1>
+          <h1 className="text-4xl col-span-4">{extension.name}</h1>
           <div className="border-2">
             <h2>Dropdown bar SCRAPING DATE</h2>
           </div>
           <div className="border-2">
             <h2 className="text-xl">Publisher</h2>
-            <p>Lorem ipsum dolor sit amet</p>
+            <p>{extension.publisher}</p>
           </div>
           <div className="border-2">
             <h2 className="text-xl">Category</h2>
-            <p>Lorem ipsum dolor sit amet</p>
+            <p>{extension.category}</p>
           </div>
           <div className="border-2">
             <h2 className="text-xl">Rating</h2>
-            <p>Lorem ipsum dolor sit amet</p>
+            <p>{extension.rating}/5</p>
           </div>
           <div className="border-2">
             <h2 className="text-xl">Installs</h2>
-            <p>Lorem ipsum dolor sit amet</p>
+            <p>{extension.installs}</p>
           </div>
           <div className="border-2">
             <h2 className="text-xl">Last time updated</h2>
-            <p>Lorem ipsum dolor sit amet</p>
+            <p>{extension.lastUpdated}</p>
           </div>
         </div>
 

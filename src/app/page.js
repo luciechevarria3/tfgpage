@@ -6,11 +6,14 @@ import TopBar from "./components/TopBar";
 
 import Extension from "./models/Extension";
 
-export default async function SearchPage() {
-
+async function loadExtensions() {
   connectDB();
+  const extensions = await Extension.find({ name: { "$exists": true } }).limit(12);
+  return extensions
+}
 
-  const extensions10 = await Extension.find().limit(10);
+export default async function SearchPage() {
+  const extensions = await loadExtensions();
 
   return (
     <>
@@ -32,10 +35,10 @@ export default async function SearchPage() {
         </li>
       </ul>
 
-      <div className="mx-64 grid grid-cols-4 gap-y-8 justify-items-center">
-        {extensions10.map(extension => {
-          return <ExtensionCard key={extension._id} name={extension.name} image={extension.image} />
-        })}
+      <div className="mx-64 grid grid-cols-4 gap-4 justify-items-center">
+        {extensions.map(extension => (
+          <ExtensionCard id={extension._id} name={extension.name} image={extension.image} publisher={extension.publisher} extID={extension._id} />
+        ))}
       </div>
     </>
   );
