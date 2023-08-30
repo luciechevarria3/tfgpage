@@ -15,37 +15,42 @@ export default async function ExtensionPage({ params }) {
 
   const extension = await loadExtension(extensionID)
 
+  const lastUpdated = extension.lastUpdated.replace("Updated", "");
+
   return (
     <>
       <TopBar />
-      <div className="mx-80">
-        <div className="p-4 my-4 text-white grid grid-cols-6 gap-4">
-          <img className="row-span-2" src={extension.image} />
+      <div className="mx-64">
+        <div className="p-4 my-4 text-white grid grid-cols-6 gap-4 bg-zinc-400 p-4 rounded-2xl">
+          <img className="row-span-2 h-[120px] w-[120px] border-2 top-3" src={extension.image} />
 
-          <h1 className="text-4xl col-span-4">{extension.name}</h1>
-          <div className="border-2">
-            <h2>Dropdown bar SCRAPING DATE</h2>
-          </div>
-          <div className="border-2">
+          <h1 className="text-4xl col-span-5">{extension.name}</h1>
+
+          <div>
             <h2 className="text-xl">Publisher</h2>
-            <p>{extension.publisher}</p>
+            <p className="pt-8">{extension.publisher}</p>
           </div>
-          <div className="border-2">
+
+          <div>
             <h2 className="text-xl">Category</h2>
-            <p>{extension.category}</p>
+            <p className="pt-8">{extension.category}</p>
           </div>
-          <div className="border-2">
+
+          <div>
             <h2 className="text-xl">Rating</h2>
-            <p>{extension.rating}/5</p>
+            <p className="pt-8">{extension.rating} stars out of 5</p>
           </div>
-          <div className="border-2">
+
+          <div>
             <h2 className="text-xl">Installs</h2>
-            <p>{extension.installs}</p>
+            <p className="pt-8">{extension.installs}</p>
           </div>
-          <div className="border-2">
+
+          <div>
             <h2 className="text-xl">Last time updated</h2>
-            <p>{extension.lastUpdated}</p>
+            <p className="pt-1">{lastUpdated}</p>
           </div>
+
         </div>
 
         <div className="bg-zinc-400 p-4 rounded-2xl">

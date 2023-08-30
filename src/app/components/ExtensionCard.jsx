@@ -15,7 +15,7 @@ export default function ExtensionCard({ name, image, publisher, extID }) {
             />
           </div>
 
-          <div className="mb-10 w-48 h-48 text-center border-2">
+          <div className="mb-10 w-48 h-48 text-center">
             <h2 className="font-bold text-lg text-ellipsis overflow-hidden">
               {name}
             </h2>
@@ -28,7 +28,7 @@ export default function ExtensionCard({ name, image, publisher, extID }) {
             </span>
           </div>
 
-          <div className="flex justify-center border-2">
+          <div className="flex justify-center">
             <img className="inline w-8 h-8" src="/chrome.png" alt="chrome icon" />
             <img className="inline w-8 h-8" src="/edge.png" alt="edge icon" />
             <img className="inline w-8 h-8" src="/firefox.png" alt="firefox icon" />

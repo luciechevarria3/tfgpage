@@ -13,25 +13,29 @@ async function loadExtensions() {
 }
 
 export default async function SearchPage() {
+  const browserValues = ["Microsoft Edge", "Google Chrome", "Mozilla Firefox"];
+  const categoryValues = ["Accesibility", "Blogging", "Communication", "Entertainment", "News & Weather", "Photos", "Productivity", "Search tools", "Shopping", "Social", "Sports"];
+
+
   const extensions = await loadExtensions();
 
   return (
     <>
       <TopBar />
 
-      <div className="bg-red-200 mx-80 mt-8 flex justify-center">
+      <div className="mx-80 mt-8 flex justify-center">
         <SearchBar />
       </div>
 
       <ul className="mx-80 my-12 grid grid-cols-3 gap-x-12">
         <li>
-          <DropdownBar text="Browser" />
+          <DropdownBar title="Browser" values={browserValues} />
         </li>
         <li>
-          <DropdownBar text="Category" />
+          <DropdownBar title="Category" values={categoryValues} />
         </li>
         <li>
-          <DropdownBar text="Rating" />
+          <DropdownBar title="Rating" />
         </li>
       </ul>
 
