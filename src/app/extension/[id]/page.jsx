@@ -1,13 +1,11 @@
-import { connectDB } from "@/utils/database";
-import TopBar from "../components/TopBar";
-import Extension from "../models/Extension";
+import TopBar from "../../components/TopBar";
 
 async function loadExtension(extID) {
-  connectDB();
+  const res = await fetch(`http://localhost:3000/api/extensions/${extID}`);
 
-  const extension = await Extension.findOne({ _id: extID });
+  const data = await res.json();
 
-  return extension;
+  return data;
 }
 
 export default async function ExtensionPage({ params }) {

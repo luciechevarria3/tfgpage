@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function ExtensionCard({ name, image, publisher, extID }) {
   return (
     <>
-      <Link href={`/${extID}`}>
+      <Link href={`/extension/${extID}`}>
         <div className="border-4 border-slate-300 rounded-lg w-fit p-4 text-white hover:bg-slate-600 hover:cursor-pointer">
 
 

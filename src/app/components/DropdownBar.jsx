@@ -21,7 +21,7 @@ export default function DropdownBar({ title, values }) {
       <ul className={`bg-white mt-2 max-h-28 overflow-auto ${opened ? "block" : "hidden"}`}>
         {values?.map(value => (
           <li key={value} className="p-4 hover:bg-sky-600 hover:text-white cursor-pointer"
-            onClick={() => { setSelected(value); setOpened(!opened) }}
+            onClick={e => { setSelected(value); setOpened(!opened); alert(e.target.innerText) }}
           >
             {value}
           </li>
