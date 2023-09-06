@@ -1,23 +1,37 @@
+"use client"
+
+import { useState, useEffect } from "react";
+
 import DropdownBar from "./components/DropdownBar";
 import ExtensionCard from "./components/ExtensionCard";
 import SearchBar from "./components/SearchBar";
 import TopBar from "./components/TopBar";
 
-async function loadExtensions() {
-  const res = await fetch("http://localhost:3000/api/extensions");
-
-  let data = await res.json();
-
-  data = data.slice(0, 12);
-
-  return data;
+async function loadExtensions({ browser, category, rating }) {
+  let res;
+  if (browser === "Google Chrome") {
+    res = await fetch(`http://localhost:3000/chrome/${category}`)
+  }
 }
 
-export default async function SearchPage() {
+export default function SearchPage() {
+  const [browser, setBrowser] = useState("All");
+  const [category, setCategory] = useState("All");
+  const [rating, setRating] = useState("All");
+  const [extensions, setExtensions] = useState([]);
+
   const browserValues = ["Microsoft Edge", "Google Chrome", "Mozilla Firefox"];
   const categoryValues = ["Accesibility", "Blogging", "Communication", "Entertainment", "News & Weather", "Photos", "Productivity", "Search tools", "Shopping", "Social", "Sports"];
+  const ratingValues = [1, 2, 3, 4, 5];
 
-  const extensions = await loadExtensions();
+  useEffect(async () => {
+    const res = await fetch("http://localhost:3000/api/extensions");
+
+    const data = await res.json();
+
+    setExtensions(data);
+  }, []);
+
 
   return (
     <>
@@ -35,13 +49,13 @@ export default async function SearchPage() {
           <DropdownBar title="Category" values={categoryValues} />
         </li>
         <li>
-          <DropdownBar title="Rating" />
+          <DropdownBar title="Rating" values={ratingValues} />
         </li>
       </ul>
 
       <div className="mx-64 grid grid-cols-4 gap-4 justify-items-center">
         {extensions.map(extension => (
-          <ExtensionCard id={extension._id} name={extension.name} image={extension.image} publisher={extension.publisher} extID={extension._id} />
+          <ExtensionCard key={extension._id} name={extension.name} image={extension.image} publisher={extension.publisher} extID={extension._id} />
         ))}
       </div>
     </>

@@ -2,6 +2,17 @@ import Extension from "@/app/models/Extension";
 import { connectDB } from "@/utils/database";
 import { NextResponse } from "next/server";
 
+function normalizeCategory(category) {
+  if (!category) { return null };
+  let normalizedCategory = category;
+
+  if (category.includes("Developer")) { normalizedCategory = "Developer Tools"; }
+  if (category.includes("News")) { normalizedCategory = "News & Weather"; }
+  if (category.includes("Social")) { normalizedCategory = "Social & Communication"; }
+
+  return normalizedCategory;
+}
+
 export async function GET(request) {
   connectDB();
 
@@ -9,7 +20,7 @@ export async function GET(request) {
 
   let queryControl = 0;
 
-  const categorySt = searchParams.get("category");
+  const categorySt = normalizeCategory(searchParams.get("category"));
 
   if (categorySt) { queryControl += 1; };
 
