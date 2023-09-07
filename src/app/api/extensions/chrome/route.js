@@ -49,7 +49,7 @@ export async function GET(request) {
 
   let extensions = await Extension.find(dbQuery);
 
-  extensions = extensions.slice(0, 5);
+  extensions = extensions.slice(0, 24);
 
   return NextResponse.json(extensions);
 }

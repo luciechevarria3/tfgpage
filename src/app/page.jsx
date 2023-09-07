@@ -7,30 +7,77 @@ import ExtensionCard from "./components/ExtensionCard";
 import SearchBar from "./components/SearchBar";
 import TopBar from "./components/TopBar";
 
-async function loadExtensions({ browser, category, rating }) {
-  let res;
-  if (browser === "Google Chrome") {
-    res = await fetch(`http://localhost:3000/chrome/${category}`)
-  }
-}
-
 export default function SearchPage() {
-  const [browser, setBrowser] = useState("All");
-  const [category, setCategory] = useState("All");
-  const [rating, setRating] = useState("All");
+  const [browser, setBrowser] = useState("");
+  const [category, setCategory] = useState("");
+  const [rating, setRating] = useState("");
   const [extensions, setExtensions] = useState([]);
 
   const browserValues = ["Microsoft Edge", "Google Chrome", "Mozilla Firefox"];
   const categoryValues = ["Accesibility", "Blogging", "Communication", "Entertainment", "News & Weather", "Photos", "Productivity", "Search tools", "Shopping", "Social", "Sports"];
   const ratingValues = [1, 2, 3, 4, 5];
 
-  useEffect(async () => {
-    const res = await fetch("http://localhost:3000/api/extensions");
+  const handleBrowserChange = (selectedBrowser) => {
+    if (selectedBrowser === "All") {
+      setBrowser("");
+    }
+    setBrowser(selectedBrowser);
+  }
 
-    const data = await res.json();
+  const handleCategoryChange = (selectedCategory) => {
+    if (selectedCategory === "All") {
+      setCategory("");
+    }
+    setCategory(selectedCategory);
+  }
 
-    setExtensions(data);
-  }, []);
+  const handleRatingChange = (selectedRating) => {
+    if (selectedRating === "All") {
+      setRating("");
+    }
+    setRating(selectedRating);
+  }
+
+  function normalizeBrowser(browser) {
+    if (!browser) { return null };
+    let normalizedBrowser = browser;
+
+    if (browser.includes("Google")) { normalizedBrowser = "chrome"; }
+    if (browser.includes("Microsoft")) { normalizedBrowser = "edge"; }
+    if (browser.includes("Mozilla")) { normalizedBrowser = "firefox"; }
+
+    return normalizedBrowser;
+  }
+
+  useEffect(() => {
+    async function fetchData(apiURL) {
+      const res = await fetch(apiURL);
+
+      const data = await res.json();
+
+      setExtensions(data);
+    }
+
+    let apiURL = `http://localhost:3000/api/extensions`;
+
+    if (browser !== "") {
+      const normalBrowser = normalizeBrowser(browser);
+      apiURL += `/${normalBrowser}?`;
+    }
+
+    if (category !== "") {
+      apiURL += `?&category=${category}`;
+    }
+
+    if (rating !== "") {
+      apiURL += `?&rating=${rating}`;
+    }
+
+    fetchData(apiURL);
+
+    alert(apiURL);
+
+  }, [browser, category, rating]);
 
 
   return (
@@ -43,13 +90,13 @@ export default function SearchPage() {
 
       <ul className="mx-80 my-12 grid grid-cols-3 gap-x-12">
         <li>
-          <DropdownBar title="Browser" values={browserValues} />
+          <DropdownBar title="Browser" values={browserValues} callback={handleBrowserChange} />
         </li>
         <li>
-          <DropdownBar title="Category" values={categoryValues} />
+          <DropdownBar title="Category" values={categoryValues} callback={handleCategoryChange} />
         </li>
         <li>
-          <DropdownBar title="Rating" values={ratingValues} />
+          <DropdownBar title="Rating" values={ratingValues} callback={handleRatingChange} />
         </li>
       </ul>
 
