@@ -49,9 +49,7 @@ export async function GET(request) {
 
   console.log(dbQuery);
 
-  let extensions = await Extension.find(dbQuery);
-
-  extensions = extensions.slice(0, 20);
+  let extensions = await Extension.find(dbQuery).limit(12);
 
   return NextResponse.json(extensions);
 }

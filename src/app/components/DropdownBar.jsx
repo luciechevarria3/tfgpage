@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
 
 export default function DropdownBar({ title, values, callback }) {

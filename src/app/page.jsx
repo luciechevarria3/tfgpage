@@ -62,7 +62,7 @@ export default function SearchPage() {
 
     if (browser !== "") {
       const normalBrowser = normalizeBrowser(browser);
-      apiURL += `/${normalBrowser}?`;
+      apiURL += `/${normalBrowser}`;
     }
 
     if (category !== "") {

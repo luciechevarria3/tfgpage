@@ -2,7 +2,7 @@ import Extension from "@/app/models/Extension";
 import { connectDB } from "@/utils/database";
 import { NextResponse } from "next/server";
 
-export async function GET(request, { params }) {
+export async function GET({ params }) {
   connectDB();
 
   const extension = await Extension.findOne({ _id: params.id });
