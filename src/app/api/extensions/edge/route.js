@@ -1,17 +1,7 @@
 import Extension from "@/app/models/Extension";
 import { connectDB } from "@/utils/database";
 import { NextResponse } from "next/server";
-
-function normalizeCategory(category) {
-  if (!category) { return null };
-  let normalizedCategory = category;
-
-  if (category.includes("Developer")) { normalizedCategory = "Developer tools"; }
-  if (category.includes("News")) { normalizedCategory = "News & weather"; }
-  if (category.includes("Search")) { normalizedCategory = "Search tools"; }
-
-  return normalizedCategory;
-}
+import { normalizeCategory } from "../chrome/route";
 
 export async function GET(request) {
   connectDB();

@@ -8,34 +8,45 @@ import SearchBar from "./components/SearchBar";
 import TopBar from "./components/TopBar";
 
 export default function SearchPage() {
+  const browserValues = ["Microsoft Edge", "Google Chrome", "Mozilla Firefox"];
+  const allCats = ['accesibility', 'alerts & updates', 'appearance', 'blogging', 'bookmarks', 'communication', 'developer tools', 'download management', 'entertainment', 'feeds, news & blogging', 'fun', 'games & entertainment', 'language support', 'news & weather', 'other', 'photos', 'photos, music & videos', 'privacy & security', 'productivity', 'search tools', 'shopping', 'social', 'social & communication', 'sports', 'tabs', 'web development'];
+  const chromeCats = ["accesibility", "developer tools", "fun", "news & weather", "photos", "productivity", "shopping", "social & communication"];
+  const edgeCats = ["accesibility", "blogging", "communication", "developer tools", "entertainment", "news & weather", "photos", "productivity", "search tools", "shopping", "social", "sports"];
+  const firefoxCats = ['alerts & updates', 'appearance', 'bookmarks', 'download management', 'feeds, news & blogging', 'games & entertainment', 'language support', 'other', 'photos, music & videos', 'privacy & security', 'search tools', 'shopping', 'social & communication', 'tabs', 'web development'];
+  const ratingValues = [1, 2, 3, 4, 5];
+
   const [browser, setBrowser] = useState("");
   const [category, setCategory] = useState("");
+  const [categories, setCategories] = useState(allCats);
   const [rating, setRating] = useState("");
   const [extensions, setExtensions] = useState([]);
 
-  const browserValues = ["Microsoft Edge", "Google Chrome", "Mozilla Firefox"];
-  const categoryValues = ["Accesibility", "Blogging", "Communication", "Entertainment", "News & Weather", "Photos", "Productivity", "Search tools", "Shopping", "Social", "Sports"];
-  const ratingValues = [1, 2, 3, 4, 5];
 
   const handleBrowserChange = (selectedBrowser) => {
     if (selectedBrowser === "All") {
       setBrowser("");
     }
-    setBrowser(selectedBrowser);
+    else {
+      setBrowser(selectedBrowser);
+    }
   }
 
   const handleCategoryChange = (selectedCategory) => {
     if (selectedCategory === "All") {
       setCategory("");
     }
-    setCategory(selectedCategory);
+    else {
+      setCategory(selectedCategory);
+    }
   }
 
   const handleRatingChange = (selectedRating) => {
     if (selectedRating === "All") {
       setRating("");
     }
-    setRating(selectedRating);
+    else {
+      setRating(selectedRating);
+    }
   }
 
   function normalizeBrowser(browser) {
@@ -79,6 +90,28 @@ export default function SearchPage() {
 
   }, [browser, category, rating]);
 
+  useEffect(() => {
+    switch (browser) {
+      case "Google Chrome":
+        setCategories(chromeCats);
+        break;
+
+      case "Microsoft Edge":
+        setCategories(edgeCats);
+        break;
+
+      case "Mozilla Firefox":
+        setCategories(firefoxCats);
+        break;
+
+      default:
+        setCategories(allCats);
+        break;
+    }
+
+  }, [browser])
+
+
 
   return (
     <>
@@ -93,7 +126,7 @@ export default function SearchPage() {
           <DropdownBar title="Browser" values={browserValues} callback={handleBrowserChange} />
         </li>
         <li>
-          <DropdownBar title="Category" values={categoryValues} callback={handleCategoryChange} />
+          <DropdownBar title="Category" values={categories} callback={handleCategoryChange} />
         </li>
         <li>
           <DropdownBar title="Rating" values={ratingValues} callback={handleRatingChange} />
