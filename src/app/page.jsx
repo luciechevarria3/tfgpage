@@ -8,7 +8,7 @@ import SearchBar from "./components/SearchBar";
 import TopBar from "./components/TopBar";
 
 export default function SearchPage() {
-  const browserValues = ["Microsoft Edge", "Google Chrome", "Mozilla Firefox"];
+  const browserValues = ["Google Chrome", "Microsoft Edge", "Mozilla Firefox"];
   const allCats = ['accesibility', 'alerts & updates', 'appearance', 'blogging', 'bookmarks', 'communication', 'developer tools', 'download management', 'entertainment', 'feeds, news & blogging', 'fun', 'games & entertainment', 'language support', 'news & weather', 'other', 'photos', 'photos, music & videos', 'privacy & security', 'productivity', 'search tools', 'shopping', 'social', 'social & communication', 'sports', 'tabs', 'web development'];
   const chromeCats = ["accesibility", "developer tools", "fun", "news & weather", "photos", "productivity", "shopping", "social & communication", "themes"];
   const edgeCats = ["accesibility", "blogging", "communication", "developer tools", "entertainment", "news & weather", "photos", "productivity", "search tools", "shopping", "social", "sports"];
@@ -85,8 +85,6 @@ export default function SearchPage() {
     }
 
     fetchData(apiURL);
-
-    alert(apiURL);
 
   }, [browser, category, rating]);
 
