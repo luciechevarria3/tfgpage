@@ -8,20 +8,20 @@ export function normalizeCategory(category) {
 
   let normalizedCategory;
 
-  if (category.includes("Developer")) { normalizedCategory = "Developer Tools"; }
-  if (category.includes("News")) { normalizedCategory = "News & Weather"; }
-  if (category.includes("Social")) { normalizedCategory = "Social & Communication"; }
-  if (category.includes("Alerts")) { normalizedCategory = "Alerts & Updates"; }
-  if (category.includes("Download")) { normalizedCategory = "Download Management"; }
-  if (category.includes("Feeds")) { normalizedCategory = "Feeds, News & Blogging"; }
-  if (category.includes("Games")) { normalizedCategory = "Games & Entertainment"; }
-  if (category.includes("Language")) { normalizedCategory = "Language Support"; }
-  if (category.includes("Photos")) { normalizedCategory = "Photos, Music & Videos"; }
-  if (category.includes("Privacy")) { normalizedCategory = "Privacy & Security"; }
-  if (category.includes("Search")) { normalizedCategory = "Search Tools"; }
-  if (category.includes("Web")) { normalizedCategory = "Web Development"; }
+  if (category.includes("Developer")) { normalizedCategory = "developer tools"; }
+  if (category.includes("News")) { normalizedCategory = "news & weather"; }
+  if (category.includes("Social")) { normalizedCategory = "social & communication"; }
+  if (category.includes("Alerts")) { normalizedCategory = "alerts & updates"; }
+  if (category.includes("Download")) { normalizedCategory = "download management"; }
+  if (category.includes("Feeds")) { normalizedCategory = "feeds, news & blogging"; }
+  if (category.includes("Games")) { normalizedCategory = "games & entertainment"; }
+  if (category.includes("Language")) { normalizedCategory = "language support"; }
+  if (category.includes("Photos")) { normalizedCategory = "photos, music & videos"; }
+  if (category.includes("Privacy")) { normalizedCategory = "privacy & security"; }
+  if (category.includes("Search")) { normalizedCategory = "search tools"; }
+  if (category.includes("Web")) { normalizedCategory = "web development"; }
 
-  if (!normalizedCategory) { normalizedCategory = category; }
+  if (!normalizedCategory) { normalizedCategory = category.toLowerCase(); }
 
   return normalizedCategory;
 

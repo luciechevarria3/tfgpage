@@ -1,7 +1,7 @@
 import TopBar from "../../components/TopBar";
 
 async function loadExtension(extID) {
-  const res = await fetch(`http://localhost:3000/api/extensions/${extID}`);
+  const res = await fetch(`http://localhost:3000/api/extensions?id=${extID}`);
 
   const data = await res.json();
 

@@ -1,17 +1,7 @@
 import Extension from "@/app/models/Extension";
 import { connectDB } from "@/utils/database";
 import { NextResponse } from "next/server";
-
-function normalizeCategory(category) {
-  if (!category) { return null };
-  let normalizedCategory = category;
-
-  if (category.includes("Developer")) { normalizedCategory = "Developer Tools"; }
-  if (category.includes("News")) { normalizedCategory = "News & Weather"; }
-  if (category.includes("Social")) { normalizedCategory = "Social & Communication"; }
-
-  return normalizedCategory;
-}
+import { normalizeCategory } from "./chrome/route";
 
 export async function GET(request) {
   connectDB();
@@ -27,7 +17,17 @@ export async function GET(request) {
 
   if (ratingSt) { queryControl += 2; };
 
+  const idSt = searchParams.get("id");
+
   let dbQuery;
+  let extensions;
+
+  if (idSt) {
+    dbQuery = { _id: idSt };
+    extensions = await Extension.findOne(dbQuery);
+    return NextResponse.json(extensions);
+  }
+
   switch (queryControl) {
     case 0:
       dbQuery = { name: { "$exists": true } };
@@ -46,7 +46,7 @@ export async function GET(request) {
       break;
   }
 
-  let extensions = await Extension.find(dbQuery).limit(12);
+  extensions = await Extension.find(dbQuery).limit(12);
 
   return NextResponse.json(extensions);
 }
