@@ -2,17 +2,6 @@ import Extension from "@/app/models/Extension";
 import { connectDB } from "@/utils/database";
 import { NextResponse } from "next/server";
 
-// function normalizeBrowser(browser) {
-//   if (!browser) { return null };
-//   let normalizedBrowser = browser;
-
-//   if (browser.includes("Google")) { normalizedBrowser = "Google Chrome"; }
-//   if (browser.includes("Microsoft")) { normalizedBrowser = "Microsoft Edge"; }
-//   if (browser.includes("Mozilla")) { normalizedBrowser = "Mozilla Firefox"; }
-
-//   return normalizedBrowser;
-// }
-
 async function getCategoriesExtensions(allCategories) {
   let categories = {};
   let extsCategory;
@@ -36,7 +25,7 @@ export async function GET(request) {
 
   const categories = await getCategoriesExtensions(allCategories);
 
-  return NextResponse.json({ "google chrome": chromeExts, "microsoft edge": edgeExts, "mozilla firefox": firefoxExts, categories })
+  return NextResponse.json({ "chrome": chromeExts, "edge": edgeExts, "firefox": firefoxExts, categories })
 
 
   // const { searchParams } = new URL(request.url);

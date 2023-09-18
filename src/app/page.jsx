@@ -1,122 +1,54 @@
-"use client"
-
-import { useState, useEffect } from "react";
-
 import DropdownBar from "./components/DropdownBar";
 import ExtensionCard from "./components/ExtensionCard";
 import SearchBar from "./components/SearchBar";
 import TopBar from "./components/TopBar";
 
-export default function SearchPage() {
-  const browserValues = ["Google Chrome", "Microsoft Edge", "Mozilla Firefox"];
-  const allCats = ['accesibility', 'alerts & updates', 'appearance', 'blogging', 'bookmarks', 'communication', 'developer tools', 'download management', 'entertainment', 'feeds, news & blogging', 'fun', 'games & entertainment', 'language support', 'news & weather', 'other', 'photos', 'photos, music & videos', 'privacy & security', 'productivity', 'search tools', 'shopping', 'social', 'social & communication', 'sports', 'tabs', 'web development'];
-  const chromeCats = ["accesibility", "developer tools", "fun", "news & weather", "photos", "productivity", "shopping", "social & communication", "themes"];
-  const edgeCats = ["accesibility", "blogging", "communication", "developer tools", "entertainment", "news & weather", "photos", "productivity", "search tools", "shopping", "social", "sports"];
-  const firefoxCats = ['alerts & updates', 'appearance', 'bookmarks', 'download management', 'feeds, news & blogging', 'games & entertainment', 'language support', 'other', 'photos, music & videos', 'privacy & security', 'search tools', 'shopping', 'social & communication', 'tabs', 'web development'];
-  const ratingValues = [1, 2, 3, 4, 5];
+const browserValues = ["Google Chrome", "Microsoft Edge", "Mozilla Firefox"];
+const allCats = ['Accesibility', 'Alerts & updates', 'Appearance', 'Blogging', 'Bookmarks', 'Communication', 'Developer tools', 'Download management', 'Entertainment', 'Feeds, news & blogging', 'Fun', 'Games & entertainment', 'Language support', 'News & weather', 'Other', 'Photos', 'Photos, music & videos', 'Privacy & security', 'Productivity', 'Search tools', 'Shopping', 'Social', 'Social & communication', 'Sports', 'Tabs', 'Web development'];
+const chromeCats = ['Accesibility', 'Developer tools', 'Fun', 'News & weather', 'Photos', 'Productivity', 'Shopping', 'Social & communication', 'Themes'];
+const edgeCats = ['Accesibility', 'Blogging', 'Communication', 'Developer tools', 'Entertainment', 'News & weather', 'Photos', 'Productivity', 'Search tools', 'Shopping', 'Social', 'Sports'];
+const firefoxCats = ['Alerts & updates', 'Appearance', 'Bookmarks', 'Download management', 'Feeds, news & blogging', 'Games & entertainment', 'Language support', 'Other', 'Photos, music & videos', 'Privacy & security', 'Search tools', 'Shopping', 'Social & communication', 'Tabs', 'Web development'];
+const ratingValues = [1, 2, 3, 4, 5];
 
-  const [browser, setBrowser] = useState("");
-  const [category, setCategory] = useState("");
-  const [categories, setCategories] = useState(allCats);
-  const [rating, setRating] = useState("");
-  const [extensions, setExtensions] = useState([]);
+const fetchData = async (URL) => {
+  const res = await fetch(URL);
+  const data = await res.json();
 
+  return data;
+}
 
-  const handleBrowserChange = (selectedBrowser) => {
-    if (selectedBrowser === "All") {
-      setBrowser("");
-    }
-    else {
-      setBrowser(selectedBrowser);
-    }
+const fetchExtsQtt = async () => {
+  const res = await fetch("http://localhost:3000/api/extensions/number");
+  const data = await res.json();
+
+  return data;
+}
+
+export default async function SearchPage({ searchParams }) {
+  const selectedBrowser = searchParams.browser;
+  const selectedCategory = searchParams.category;
+  const selectedRating = searchParams.rating;
+
+  let apiURL = `http://localhost:3000/api/extensions?`;
+
+  if (selectedBrowser) {
+    apiURL += `&browser=${selectedBrowser.toLowerCase()}`
   }
 
-  const handleCategoryChange = (selectedCategory) => {
-    if (selectedCategory === "All") {
-      setCategory("");
-    }
-    else {
-      setCategory(selectedCategory);
-    }
+  if (selectedCategory) {
+    apiURL += `&category=${selectedCategory.toLowerCase()}`
   }
 
-  const handleRatingChange = (selectedRating) => {
-    if (selectedRating === "All") {
-      setRating("");
-    }
-    else {
-      setRating(selectedRating);
-    }
+  if (selectedRating) {
+    apiURL += `&rating=${selectedRating}`
   }
 
-  function normalizeBrowser(browser) {
-    if (!browser) { return null };
-    let normalizedBrowser = browser;
+  const extsQtt = await fetchExtsQtt();
+  const extensions = await fetchData(apiURL);
 
-    if (browser.includes("Google")) { normalizedBrowser = "chrome"; }
-    if (browser.includes("Microsoft")) { normalizedBrowser = "edge"; }
-    if (browser.includes("Mozilla")) { normalizedBrowser = "firefox"; }
-
-    return normalizedBrowser;
-  }
-
-  useEffect(() => {
-    async function fetchData(apiURL) {
-      const res = await fetch(apiURL);
-
-      const data = await res.json();
-
-      setExtensions(data);
-    }
-
-    let apiURL = `http://localhost:3000/api/extensions`;
-
-    if (browser !== "") {
-      const normalBrowser = normalizeBrowser(browser);
-      apiURL += `/${normalBrowser}`;
-    }
-
-    if (category !== "") {
-      apiURL += `?&category=${category}`;
-    }
-
-    if (rating !== "") {
-      apiURL += `?&rating=${rating}`;
-    }
-
-    fetchData(apiURL);
-
-  }, [browser, category, rating]);
-
-  useEffect(() => {
-    switch (browser) {
-      case "Google Chrome":
-        setCategories(chromeCats);
-        break;
-
-      case "Microsoft Edge":
-        setCategories(edgeCats);
-        break;
-
-      case "Mozilla Firefox":
-        setCategories(firefoxCats);
-        break;
-
-      default:
-        setCategories(allCats);
-        break;
-    }
-
-  }, [browser])
-
-  function capitalizeCategories(categories) {
-    let capitalizedCategories = [];
-    categories.map(categorie => {
-      capitalizedCategories.push(categorie.charAt(0).toUpperCase() + categorie.slice(1));
-    })
-    return capitalizedCategories;
-  }
-
+  console.log("SELECTED BROWSER: ", selectedBrowser);
+  console.log("SELECTED CATEGORY: ", selectedCategory);
+  console.log("SELECTED RATING: ", selectedRating);
 
 
   return (
@@ -129,13 +61,13 @@ export default function SearchPage() {
 
       <ul className="mx-80 my-12 grid grid-cols-3 gap-x-12">
         <li>
-          <DropdownBar title="Browser" values={browserValues} callback={handleBrowserChange} />
+          <DropdownBar title="Browser" values={browserValues} />
         </li>
         <li>
-          <DropdownBar title="Category" values={capitalizeCategories(categories)} callback={handleCategoryChange} />
+          <DropdownBar title="Category" values={allCats} />
         </li>
         <li>
-          <DropdownBar title="Rating" values={ratingValues} callback={handleRatingChange} />
+          <DropdownBar title="Rating" values={ratingValues} />
         </li>
       </ul>
 
