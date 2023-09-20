@@ -69,10 +69,6 @@ export async function GET(request) {
 
   const idSt = searchParams.get("id");
 
-  console.log("BROWSER: ", browserSt);
-  console.log("CATEGORY: ", categorySt);
-  console.log("RATING: ", ratingSt);
-
   let dbQuery;
   let extensions;
 

@@ -25,6 +25,8 @@ const fetchExtsQtt = async () => {
 }
 
 export default async function SearchPage({ searchParams }) {
+  const extsQtt = await fetchExtsQtt();
+
   const selectedBrowser = searchParams.browser;
   const selectedCategory = searchParams.category;
   const selectedRating = searchParams.rating;
@@ -43,13 +45,27 @@ export default async function SearchPage({ searchParams }) {
     apiURL += `&rating=${selectedRating}`
   }
 
-  const extsQtt = await fetchExtsQtt();
   const extensions = await fetchData(apiURL);
 
-  console.log("SELECTED BROWSER: ", selectedBrowser);
-  console.log("SELECTED CATEGORY: ", selectedCategory);
-  console.log("SELECTED RATING: ", selectedRating);
+  // console.log("SELECTED BROWSER: ", selectedBrowser);
+  // console.log("SELECTED CATEGORY: ", selectedCategory);
+  // console.log("SELECTED RATING: ", selectedRating);
 
+  let categories = allCats;
+
+  if (selectedBrowser) {
+    if (selectedBrowser.includes("chrome")) {
+      categories = chromeCats;
+    }
+
+    if (selectedBrowser.includes("edge")) {
+      categories = edgeCats;
+    }
+
+    if (selectedBrowser.includes("firefox")) {
+      categories = firefoxCats;
+    }
+  }
 
   return (
     <>
@@ -64,7 +80,7 @@ export default async function SearchPage({ searchParams }) {
           <DropdownBar title="Browser" values={browserValues} />
         </li>
         <li>
-          <DropdownBar title="Category" values={allCats} />
+          <DropdownBar title="Category" values={categories} />
         </li>
         <li>
           <DropdownBar title="Rating" values={ratingValues} />
