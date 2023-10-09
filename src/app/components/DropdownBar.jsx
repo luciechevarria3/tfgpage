@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, usePathname } from "next/navigation";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import Link from "next/link";
 
@@ -29,30 +29,28 @@ function capitalizeValue(sentence) {
 export default function DropdownBar({ title, values }) {
   const searchParams = useSearchParams();
 
-  let url = "?";
+  let selectedBrowser = searchParams.get("browser");
+  let selectedCategory = searchParams.get("category");
+  let selectedRating = searchParams.get("rating");
+  let selectedValue = searchParams.get(title.toLowerCase());
 
-  const selectedBrowser = searchParams.get("browser");
-  const selectedCategory = searchParams.get("category");
-  const selectedRating = searchParams.get("rating");
+  let url;
 
-  if (selectedBrowser) {
-    url += `&browser=${selectedBrowser.toLowerCase()}`
+  if (!selectedBrowser) {
+    selectedBrowser = "all";
   }
 
-  if (selectedCategory) {
-    url += `&category=${selectedCategory.toLowerCase()}`
+  if (!selectedCategory) {
+    selectedCategory = "all";
   }
 
-  if (selectedRating) {
-    url += `&rating=${selectedRating}`
+  if (!selectedRating) {
+    selectedRating = "all";
   }
 
-  const selectedValue = searchParams.get(title.toLowerCase());
-
-  // console.log(`${title} DROPDOWN:\n`);
-  // console.log(`SELECTED BROWSER: ${selectedBrowser}`);
-  // console.log(`SELECTED CATEGORY: ${selectedCategory}`);
-  // console.log(`SELECTED RATING: ${selectedRating} \n`);
+  if (!selectedValue) {
+    selectedValue = "all";
+  }
 
   // const [selected, setSelected] = useState("All");
   const [opened, setOpened] = useState(false);
@@ -72,15 +70,30 @@ export default function DropdownBar({ title, values }) {
       </div>
 
       <ul className={`bg-white mt-2 max-h-28 overflow-auto ${opened ? "block" : "hidden"}`}>
-        {values?.map(value => (
-          <Link key={value} className="p-4 hover:bg-sky-600 hover:text-white cursor-pointer"
-            href={`?${title?.toLowerCase()}=${value.toString().toLowerCase()}`}
-            // href={url}
-            onClick={() => { setOpened(!opened); }}
-          >
-            {value}
-          </Link>
-        )
+        {values?.map(value => {
+          if (title === "Browser") {
+            url = `?browser=${value}&category=${selectedCategory}&rating=${selectedRating}`;
+          }
+
+          if (title === "Category") {
+            url = `?browser=${selectedBrowser}&category=${value}&rating=${selectedRating}`;
+          }
+
+          if (title === "Rating") {
+            url = `?browser=${selectedBrowser}&category=${selectedCategory}&rating=${value}`;
+          }
+
+          return (
+            <li key={value} className="p-4 hover:bg-sky-600 hover:text-white cursor-pointer"
+              // href={url}
+              onClick={() => { setOpened(!opened); }}
+            >
+              <Link href={url}>
+                {value}
+              </Link>
+            </li>
+          )
+        }
         )}
       </ul>
     </>
