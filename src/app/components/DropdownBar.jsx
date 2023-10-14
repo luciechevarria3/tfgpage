@@ -29,28 +29,30 @@ function capitalizeValue(sentence) {
 export default function DropdownBar({ title, values }) {
   const searchParams = useSearchParams();
 
-  let selectedBrowser = searchParams.get("browser");
-  let selectedCategory = searchParams.get("category");
-  let selectedRating = searchParams.get("rating");
-  let selectedValue = searchParams.get(title.toLowerCase());
+  let selectedBrowser = searchParams.get("browser") || "all";
+  let selectedCategory = searchParams.get("category") || "all";
+  let selectedRating = searchParams.get("rating") || "all";
+  let selectedValue = searchParams.get(title.toLowerCase()) || "all";
+
+  selectedCategory = selectedCategory.replace("&", "and");
 
   let url;
 
-  if (!selectedBrowser) {
-    selectedBrowser = "all";
-  }
+  // if (!selectedBrowser) {
+  //   selectedBrowser = "all";
+  // }
 
-  if (!selectedCategory) {
-    selectedCategory = "all";
-  }
+  // if (!selectedCategory) {
+  //   selectedCategory = "all";
+  // }
 
-  if (!selectedRating) {
-    selectedRating = "all";
-  }
+  // if (!selectedRating) {
+  //   selectedRating = "all";
+  // }
 
-  if (!selectedValue) {
-    selectedValue = "all";
-  }
+  // if (!selectedValue) {
+  //   selectedValue = "all";
+  // }
 
   // const [selected, setSelected] = useState("All");
   const [opened, setOpened] = useState(false);
@@ -76,7 +78,7 @@ export default function DropdownBar({ title, values }) {
           }
 
           if (title === "Category") {
-            url = `?browser=${selectedBrowser}&category=${value}&rating=${selectedRating}`;
+            url = `?browser=${selectedBrowser}&category=${value.replace("&", "and")}&rating=${selectedRating}`;
           }
 
           if (title === "Rating") {

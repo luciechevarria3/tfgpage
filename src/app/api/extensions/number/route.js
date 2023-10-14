@@ -62,6 +62,8 @@ export async function GET(request) {
   const edgeExts = await Extension.countDocuments({ webstore: "Microsoft Edge" });
   const firefoxExts = await Extension.countDocuments({ webstore: "Mozilla Firefox" });
 
+  const totalExtensions = chromeExts + edgeExts + firefoxExts;
+
   const chrome = await getCategoriesExtensions("chrome");
   const edge = await getCategoriesExtensions("edge");
   const firefox = await getCategoriesExtensions("firefox");
@@ -72,7 +74,7 @@ export async function GET(request) {
   edge["total"] = edgeExts;
   firefox["total"] = firefoxExts;
 
-  return NextResponse.json({ "chrome": chrome, "edge": edge, "firefox": firefox, categories })
+  return NextResponse.json({ "total": totalExtensions, "chrome": chrome, "edge": edge, "firefox": firefox, categories })
 
 
   // const { searchParams } = new URL(request.url);
