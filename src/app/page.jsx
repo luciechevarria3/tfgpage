@@ -248,7 +248,7 @@ export default async function SearchPage({ searchParams }) {
         ))}
       </div>
 
-      <PaginationControls searchParams={searchParams} />
+      <PaginationControls searchParams={searchParams} extensionsNum={extensions.length} />
     </>
   );
 }

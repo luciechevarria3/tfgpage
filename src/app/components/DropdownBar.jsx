@@ -38,23 +38,6 @@ export default function DropdownBar({ title, values }) {
 
   let url;
 
-  // if (!selectedBrowser) {
-  //   selectedBrowser = "all";
-  // }
-
-  // if (!selectedCategory) {
-  //   selectedCategory = "all";
-  // }
-
-  // if (!selectedRating) {
-  //   selectedRating = "all";
-  // }
-
-  // if (!selectedValue) {
-  //   selectedValue = "all";
-  // }
-
-  // const [selected, setSelected] = useState("All");
   const [opened, setOpened] = useState(false);
 
   return (
@@ -86,14 +69,13 @@ export default function DropdownBar({ title, values }) {
           }
 
           return (
-            <li key={value} className="p-4 hover:bg-sky-600 hover:text-white cursor-pointer"
-              // href={url}
-              onClick={() => { setOpened(!opened); }}
-            >
-              <Link href={url}>
+            <Link href={url}>
+              <li key={value} className="p-4 hover:bg-sky-600 hover:text-white cursor-pointer"
+                onClick={() => { setOpened(!opened); }}
+              >
                 {value}
-              </Link>
-            </li>
+              </li>
+            </Link>
           )
         }
         )}
