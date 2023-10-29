@@ -178,6 +178,7 @@ export default async function SearchPage({ searchParams }) {
   // AÑADIR NUM DE EXTENSIONES DE CADA BROWSER
   const browserValuesWithNums = setBrowsersExtensionQtt(browserValues, extsQtt);
 
+  // CREAR LLAMADA A API
   let apiURL = `http://localhost:3000/api/extensions?`;
 
   if (selectedBrowser && selectedBrowser !== "all") {
@@ -193,8 +194,6 @@ export default async function SearchPage({ searchParams }) {
   }
 
   apiURL += `&page=${selectedPage - 1}`;
-
-  console.log("API CONSULTADA: ", apiURL);
 
   const extensions = await fetchData(apiURL);
 

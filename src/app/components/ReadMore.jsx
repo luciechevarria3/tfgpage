@@ -19,7 +19,7 @@ export default function ReadMore({ extensionDescription }) {
   }
 
   return (<>
-    <p style={isOpen ? null : paragraphStyles}>
+    <p style={isOpen ? { whiteSpace: "pre-line" } : paragraphStyles}>
       {extensionDescription}
     </p>
     <ShowReadMoreButton />

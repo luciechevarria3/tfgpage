@@ -10,35 +10,6 @@ async function loadExtension(extID) {
   return data;
 }
 
-// const showWholeDescription = () => {
-//   const firstPartOfDescription = document.getElementById("firstPartOfDescription");
-
-//   const wholeDescription = document.getElementById("wholeDescription");
-
-//   firstPartOfDescription.style.display = "none";
-
-//   wholeDescription.style.display = "block";
-// }
-
-// const CutExtensionDescription = ({ extensionDescription }) => {
-//   let res = <>{extensionDescription}</>
-//   if (extensionDescription.length > 100) {
-//     const firstPartOfDescription = `${extensionDescription.substring(0, 100)}...`;
-//     res = (
-//       <>
-//         <p id="firstPartOfDescription">
-//           {firstPartOfDescription}
-//         </p>
-//         <p id="wholeDescription" style="display: none">
-//           {extensionDescription}
-//         </p>
-//         <button onClick={showWholeDescription}>Read More</button>
-//       </>
-//     )
-//   }
-//   return res;
-// }
-
 // PÁGINA PARA MOSTRAR INFORMACIÓN DE LA EXTENSIÓN
 
 export default async function ExtensionPage({ params }) {
@@ -87,10 +58,6 @@ export default async function ExtensionPage({ params }) {
         <div className="bg-zinc-400 p-4 rounded-2xl">
           <h1 className="text-4xl">About this extension</h1>
           <br />
-          {/* <CutExtensionDescription extensionDescription={extension.description} /> */}
-          {/* <p style={{ whiteSpace: "pre-line" }}>
-            {extension.description}
-          </p> */}
           <ReadMore extensionDescription={extension.description} />
         </div>
       </div>
