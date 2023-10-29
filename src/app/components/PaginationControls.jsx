@@ -31,7 +31,6 @@ export default async function PaginationControls({ searchParams, extensionsNum }
   }
 
 
-
   return (
     <div className="flex flex-row space-x-4 items-center justify-center w-full h-10 my-8">
       <PreviousPageButton selectedPage={selectedPage} />

@@ -115,12 +115,6 @@ export async function GET(request) {
       break;
   }
 
-  // console.log("API: CATEGORÍA: ", categorySt);
-
-  console.log("API: QUERY: ", dbQuery);
-
-  console.log("PAGE: ", page);
-
   extensions = await Extension.find(dbQuery).skip(page * extensionsPerPage).limit(extensionsPerPage);
 
   return NextResponse.json(extensions);
