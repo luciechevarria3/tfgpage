@@ -74,84 +74,13 @@ export async function GET(request) {
   edge["total"] = edgeExts;
   firefox["total"] = firefoxExts;
 
+  console.log("LA RESPUESTA DE LA API:");
+  console.log("NUM TOTAL DE EXTENSIONES: " + totalExtensions + "\n");
+  console.log("CHROME " + chrome + "\n");
+  console.log("EDGE " + edge + "\n");
+  console.log("FIREFOX: " + firefox + "\n");
+  console.log("CATEGORIES " + categories + "\n");
+
   return NextResponse.json({ "total": totalExtensions, "chrome": chrome, "edge": edge, "firefox": firefox, categories })
 
-
-  // const { searchParams } = new URL(request.url);
-
-  // console.log(searchParams);
-
-  // let queryControl = 0;
-
-  // const browser = normalizeBrowser(searchParams.get("browser"));
-
-  // if (browser) {
-  //   queryControl += 1;
-  // }
-
-  // const category = normalizeCategory(searchParams.get("category"));
-
-  // if (category) {
-  //   queryControl += 2;
-  // }
-
-  // const rating = searchParams.get("rating");
-
-  // if (rating) {
-  //   queryControl += 4;
-  // }
-
-  // let query;
-
-  // switch (queryControl) {
-  //   case 0: // NUM TOTAL DE EXTENSIONES
-  //     query = {};
-  //     break;
-
-  //   case 1: // CONTAR EXTS SOLO POR BROWSER
-  //     console.log("ONLY BROWSER: ", browser);
-
-  //     query = { webstore: browser };
-  //     break;
-
-  //   case 2: // CONTAR EXTS SOLO POR CATEGORIA
-  //     console.log("ONLY CATEGORY: ", category);
-
-  //     query = { category: category };
-  //     break;
-
-  //   case 3: // CONTAR EXTS SOLO BROWSER+CATEGORIA
-  //     console.log("BROWSER + CATEGORY: " + browser + " " + category);
-
-  //     query = { webstore: browser, category: category };
-  //     break;
-
-  //   case 4: // CONTAR EXTS POR RATING
-  //     console.log("ONLY RATING: ", rating);
-
-  //     query = { rating: { $gte: rating } };
-  //     break;
-
-  //   case 5: // CONTAR EXTS POR BROWSER+RATING
-  //     console.log("BROWSER + RATING: " + browser + " " + rating);
-
-  //     query = { webstore: browser, rating: { $gte: rating } };
-  //     break;
-
-  //   case 6: // CONTAR EXTS POR CATEGORIA+RATING
-  //     console.log("CATEGORY + RATING: " + category + " " + rating);
-
-  //     query = { category: category, rating: { $gte: rating } };
-  //     break;
-
-  //   default:  // CONTAR EXTS POR BROWSER+CATEGORIA+RATING
-  //     console.log("BROWSER + CATEGORY + RATING: " + browser + " " + category + " " + rating);
-
-  //     query = { webstore: browser, category: category, rating: { $gte: rating } };
-  //     break;
-  // }
-
-  // const numExts = await Extension.countDocuments(query);
-
-  // return NextResponse.json({ nExts: numExts });
 }

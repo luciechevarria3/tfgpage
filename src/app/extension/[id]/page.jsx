@@ -55,7 +55,7 @@ export default async function ExtensionPage({ params }) {
         <div className="p-4 my-4 text-white grid grid-cols-6 gap-4 bg-zinc-400 rounded-2xl">
           <img className="row-span-2 h-[120px] w-[120px] border-2 top-3" src={extension.image} />
 
-          <a href={extension.url} target="_blank"><h1 className="text-4xl col-span-5">{extension.name}</h1></a>
+          <h1 className="text-4xl col-span-5"><a href={extension.url} target="_blank">{extension.name}</a></h1>
 
           <div>
             <h2 className="text-xl">Publisher</h2>
