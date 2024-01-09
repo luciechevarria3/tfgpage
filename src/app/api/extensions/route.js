@@ -53,7 +53,8 @@ export async function GET(request) {
 
   const { searchParams } = new URL(request.url);
   // PROCESO DE PAGINACIÓN
-  const page = parseInt(searchParams.get("page")) ?? 0;
+  // const page = parseInt(searchParams.get("page")) ?? 0;
+  const page = parseInt(searchParams.get("page"));
   const extensionsPerPage = 12;
 
   let queryControl = 0;
@@ -115,7 +116,13 @@ export async function GET(request) {
       break;
   }
 
-  extensions = await Extension.find(dbQuery).skip(page * extensionsPerPage).limit(extensionsPerPage);
+  if (!page) {
+    extensions = await Extension.find(dbQuery);
+  }
+
+  else {
+    extensions = await Extension.find(dbQuery).skip(page * extensionsPerPage).limit(extensionsPerPage);
+  }
 
   return NextResponse.json(extensions);
 }
