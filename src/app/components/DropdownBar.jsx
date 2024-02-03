@@ -69,7 +69,7 @@ export default function DropdownBar({ title, values }) {
           }
 
           return (
-            <Link href={url}>
+            <Link key={value} href={url}>
               <li key={value} className="p-4 hover:bg-sky-600 hover:text-white cursor-pointer"
                 onClick={() => { setOpened(!opened); }}
               >
